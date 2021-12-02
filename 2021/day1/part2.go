@@ -57,7 +57,7 @@ func main() {
 		prevSum = window.Sum()
 		count   = 0
 	)
-	for i := slidingWindowSize + 1; sc.Scan(); i++ {
+	for i := slidingWindowSize; sc.Scan(); i++ {
 		v, err := strconv.Atoi(sc.Text())
 		if err != nil {
 			log.Panicf("failed to parse depth value on line %d: %s", i, err)
