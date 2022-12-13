@@ -56,7 +56,6 @@ func solveRopeBridge() (int, error) {
 		}
 
 		for i := 0; i < mot.count; i++ {
-			prevHeadPoint := head
 			switch mot.direction {
 			case directionUp:
 				head.y++
@@ -67,12 +66,18 @@ func solveRopeBridge() (int, error) {
 			case directionRight:
 				head.x++
 			}
-			diffX := abs(head.x - tail.x)
-			diffY := abs(head.y - tail.y)
-			if diffX > 1 || diffY > 1 {
-				tail = prevHeadPoint
-				visited[tail] = true
+			diffX := head.x - tail.x
+			diffY := head.y - tail.y
+			if diffX >= -1 && diffX <= 1 && diffY >= -1 && diffY <= 1 {
+				continue
 			}
+			if diffX != 0 {
+				tail.x += diffX / abs(diffX) // move by 1 or -1.
+			}
+			if diffY != 0 {
+				tail.y += diffY / abs(diffY) // move by 1 or -1.
+			}
+			visited[tail] = true
 		}
 	}
 	if err = sc.Err(); err != nil {
